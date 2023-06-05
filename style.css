@@ -1,0 +1,38 @@
+html, body
+{
+    margin: 0px;
+    padding : 0px;
+}
+/* Style for the mesh data items */
+.mesh-data-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+/* Style for the checkbox */
+.mesh-data-item input[type="checkbox"] {
+    margin-right: 5px;
+}
+#meshDataContainer {
+    /*position: fixed;*/
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: fit-content;
+    max-height: calc(100% - 20px); /* Set the maximum height based on the available space */
+    overflow-y: auto; /* Enable vertical scroll */
+    z-index: 100;
+    display:block;
+    background-color: #424242;
+}
+#buttons {
+    /*position: fixed;*/
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: fit-content;
+    z-index: 100;
+    display:block;
+    background-color: #424242;
+}

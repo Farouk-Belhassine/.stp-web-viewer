@@ -5,32 +5,20 @@
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <title>OcctImportJS Demo</title>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.138.3/build/three.min.js"></script>
-    <script type="text/javascript" src="occt-import-js.js"></script>
+    <script src="three.min.js"></script>
     <script src="OrbitControls.js"></script>
-    <style>
-        html, body
-        {
-            margin: 0px;
-            padding : 0px;
-        }
-        /* Style for the mesh data items */
-      .mesh-data-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 5px;
-      }
-
-      /* Style for the checkbox */
-      .mesh-data-item input[type="checkbox"] {
-        margin-right: 5px;
-      }
-    </style>
+    <script src="jsonData.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div id="meshDataContainer"></div>
+    <div id="buttons">
+      <button id="disable_edges">disable edges</button>
+      <button id="hide_all">hide all</button>
+      <button id="show_all">show all</button>
+    </div>
     <script type='text/javascript'; src="script.js"></script>
+    <div id="meshDataContainer"></div>
 </body>
 
 </html>

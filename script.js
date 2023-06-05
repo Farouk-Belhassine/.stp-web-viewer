@@ -1,16 +1,8 @@
 const width = window.innerWidth;
 const height = window.innerHeight;
-var scene, renderer, controls, camera, mainObject;
-
-var group;
-
-var loaded = false;
-
-var jsonData;
-const meshData = new Map(); // Map to store mesh data
+var scene, renderer, camera, group;
 
 async function Load() {
-    cleanup();
     // Initialize Three.js scene, camera, and renderer
     scene = new THREE.Scene();
     // const directionalLight = new THREE.DirectionalLight (0x888888);
@@ -29,7 +21,7 @@ async function Load() {
     renderer.setClearColor(0x4f4dff); // background color
     document.body.appendChild(renderer.domElement);
 
-    mainObject = new THREE.Object3D();
+    const mainObject = new THREE.Object3D();
     await LoadGeometry(mainObject);
     scene.add(mainObject);
 
@@ -59,7 +51,7 @@ async function Load() {
     camera.lookAt(center);
 
     // Add OrbitControls
-    controls = new THREE.OrbitControls(camera, renderer.domElement);
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true; // Enable smooth camera movement
     controls.dampingFactor = 0.05; // Set the damping factor for the controls
     controls.enableZoom = true;
@@ -76,17 +68,7 @@ async function Load() {
 }
 
 async function LoadGeometry(targetObject) {
-    // init occt-import-js
-    const occt = await occtimportjs();
-
-    // download a step file
-    let fileUrl = '1551ABK.stp';
-    let response = await fetch(fileUrl);
-    let buffer = await response.arrayBuffer();
-
-    // read the imported step file
-    let fileBuffer = new Uint8Array(buffer);
-    let result = occt.ReadStepFile(fileBuffer, null);
+    let result = await jsonData();
 
     prepareGroup(targetObject, result);
 }
@@ -97,15 +79,11 @@ function prepareGroup(targetObject, result) {
     var i = 0;
     for (let resultMesh of result.meshes) {
         const { mesh, edges } = BuildMesh(resultMesh, true);
-
-        if(!loaded){
-            // Generate a unique name for each mesh
-            const uniqueName = resultMesh.name + "_" + i;
-            resultMesh.name = uniqueName;
-            i++;
-            // Store the mesh data
-            meshData.set(uniqueName, resultMesh);
-        }
+        
+        // Generate a unique name for each mesh
+        const uniqueName = resultMesh.name + "_" + i;
+        resultMesh.name = uniqueName;
+        i++;
 
         group.add(mesh);
         if (edges) {
@@ -113,10 +91,7 @@ function prepareGroup(targetObject, result) {
         }
     }
     targetObject.add(group);
-    if(!loaded){
-        jsonData = result;
-        updateMeshDataDisplay();
-    }
+    updateMeshDataDisplay();
 }
 
 function BuildMesh(geometryMesh, showEdges) {
@@ -187,33 +162,6 @@ function BuildMesh(geometryMesh, showEdges) {
     return { mesh, geometry, edges };
 }
 
-function cleanup() {
-    if (renderer && renderer.domElement.parentNode) {
-        renderer.domElement.parentNode.removeChild(renderer.domElement);
-        renderer = null;
-    }
-
-    if (scene) {
-        scene = null;
-    }
-
-    if (mainObject) {
-        mainObject.traverse(function (object) {
-            if (object instanceof THREE.Mesh) {
-                object.geometry.dispose();
-                if (object.material instanceof Array) {
-                    object.material.forEach(function (material) {
-                        material.dispose();
-                    });
-                } else {
-                    object.material.dispose();
-                }
-            }
-        });
-        mainObject = null;
-    }
-}
-
 Load();
 
 function updateMeshDataDisplay() {
@@ -226,7 +174,6 @@ function updateMeshDataDisplay() {
             const meshDataItem = document.createElement("div");
 
             const checkbox = document.createElement("input");
-            checkbox.id = uuid;
             checkbox.type = "checkbox";
             checkbox.checked = true; // Set the checkbox as checked by default
             meshDataItem.appendChild(checkbox);
@@ -277,6 +224,39 @@ function updateMeshDataDisplay() {
             });
         }
     });
-    loaded = true;
-}
 
+    const checkboxes = document.querySelectorAll("#meshDataContainer input[type='checkbox']");
+
+    const hideAllBtn = document.getElementById("hide_all");
+    hideAllBtn.addEventListener("click", function () {
+        group.children.forEach((child) => {
+            child.visible = false;
+        });
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = false;
+        });
+    });
+
+    const showAllBtn = document.getElementById("show_all");
+    showAllBtn.addEventListener("click", function () {
+        group.children.forEach((child) => {
+            child.visible = true;
+        });
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = true;
+        });
+    });
+    
+    const disablEdgesBtn = document.getElementById("disable_edges");
+    disablEdgesBtn.addEventListener("click", function () {
+        group.children.forEach((child, index) => {
+            if (child instanceof THREE.Mesh) {
+                if (index < group.children.length - 1) {
+                    var edge = group.children[index + 1];
+                    // Process the edges
+                    edge.visible = false;
+                }
+            }
+        });
+    });
+}
