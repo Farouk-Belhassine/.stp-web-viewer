@@ -3,7 +3,7 @@ async function LoadGeometry() {
     const occt = await occtimportjs();
   
     // download a step file
-    let fileUrl = '2023-04-17 - BERD - SWIVEL CRANE.stp';
+    let fileUrl = 'cube.stp';
     let response = await fetch(fileUrl);
     let buffer = await response.arrayBuffer();
   
