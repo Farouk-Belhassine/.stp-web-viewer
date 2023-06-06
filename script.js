@@ -57,6 +57,7 @@ async function Load() {
     controls.enableZoom = true;
     controls.enableRotate = true;
     controls.enablePan = true;
+    controls.screenSpacePanning = false; // Disable panning in screen space
 
     // Render the scene
     function animate() {
