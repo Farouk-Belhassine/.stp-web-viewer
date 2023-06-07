@@ -29,9 +29,11 @@
   <li><a href="https://github.com/kovacsv">Viktor Kovacs</a></li>
 </ul>
 
+<!--
 <h2>Contributing</h2>
 <p>Contributions are welcome! Fork the repository, create a new branch for your changes, and submit a pull request to
   contribute to the project.</p>
+-->
 
 <h2>License</h2>
 <p>This project is licensed under the MIT License. See the <code>LICENSE</code> file for more details.</p>
