@@ -18,6 +18,17 @@
     access the project interface.</li>
 </ol>
 
+<h2>Author</h2>
+<p>Farouk Belhassine</p>
+
+<h2>Acknowledgments</h2>
+<p> <a href="https://github.com/kovacsv/occt-import-js">occt-import.js</a> - The stp to json conversion library.</p>
+<p> <a href="https://threejs.org/">three.js</a> - 3D library.</p>
+<p>Special thanks to:</p>
+<ul>
+  <li><a href="https://github.com/kovacsv">Viktor Kovacs</a></li>
+</ul>
+
 <h2>Contributing</h2>
 <p>Contributions are welcome! Fork the repository, create a new branch for your changes, and submit a pull request to
   contribute to the project.</p>
