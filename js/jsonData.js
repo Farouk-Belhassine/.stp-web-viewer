@@ -10,9 +10,9 @@ async function fetchJsonData(url) {
 }
   
 function jsonData() {
-    const url = '1551ABK.stp.txt'; // Replace with the actual path to your .txt file
-    //const url = '2023-04-17 - BERD - SWIVEL CRANE.stp.txt';
-    //const url = 'cube.stp.txt';
+    const url = 'converted files/1551ABK.stp.txt'; // Replace with the actual path to your .txt file
+    //const url = 'converted files/2023-04-17 - BERD - SWIVEL CRANE.stp.txt';
+    //const url = 'converted files/cube.stp.txt';
   
     return fetchJsonData(url);
 }  
